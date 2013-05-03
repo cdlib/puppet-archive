@@ -44,10 +44,6 @@ define archive::download (
     default => '',
   }
 
-  if !defined(Package['curl']) {
-    package{'curl': ensure => present }
-  }
-
   case $checksum {
     true : {
       case $digest_type {
@@ -77,7 +73,6 @@ define archive::download (
               creates => "${src_target}/${name}.${digest_type}",
               timeout => $timeout,
               notify  => Exec["download archive ${name} and check sum"],
-              require => Package['curl'],
             }
 
           }
@@ -133,7 +128,6 @@ define archive::download (
         creates     => "${src_target}/${name}",
         logoutput   => true,
         timeout     => $timeout,
-        require     => Package['curl'],
         notify      => $notify,
         refreshonly => $refreshonly,
       }
