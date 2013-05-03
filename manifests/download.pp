@@ -48,7 +48,7 @@ define archive::download (
     true : {
       case $digest_type {
         'md5', 'sha1', 'sha224', 'sha256', 'sha384', 'sha512' : {
-          $checksum_cmd = "${digest_type}sum -c ${name}.${digest_type} || (echo `cat < ${name}.${digest_type}` ${name}) | ${digest_type}sum -c "
+          $checksum_cmd = "${digest_type}sum -c ${name}.${digest_type} || (echo \"`cat < ${name}.${digest_type}`  ${name}\") | ${digest_type}sum -c "
         }
         default: { fail('Unimplemented digest type') }
       }
